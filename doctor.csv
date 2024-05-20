@@ -1,0 +1,22 @@
+doctor_id,Name,Speciality,Location,Ratings,PhoneNumber,Gender,Fees
+1,"Dr.Manoj A G",Diabetologist,Noida,4.6,9368176900,Male,500
+2,"Dr. Abhinav Mishra",Dermatologist,Noida,4.75,9368176900,Male,600
+3,"Dr. Deepti Rana",Dermatologist,Delhi,4.6,9368176900,Female,700
+4,"Dr. Sachin Bansal",Dentist,Delhi,4.8,9368176900,Male,800
+5,"Dr.Kapil Garg",Dentist,Noida,4,9368176900,Male,450
+6,"Dr.Ranbeer Singh",ENT,Hyderabad,4.65,9368176900,Male,650
+7,"Dr. Sathish Kumar S",ENT,Kanpur,4.8,9368176900,Male,700
+8,"Dr.S.Mahalakshmi",General Physician,Delhi,3.9,9368176900,Female,550
+9,"Dr.Saurabh Agarwal",General Physician,Lucknow,4,9368176900,Male,500
+10,"Dr.Rama Srivastava",General Physician,Mumbai,4.5,9368176900,Female,600
+11,"Dr.R.K.Porwal",General Physician,Banglore,4.6,9368176900,Male,650
+12,"Dr.Anil Gupta",ENT,Lucknow,4.9,9368176900,Male,700
+13,"Dr.Vivek Dwivedi",ENT,Delhi,4.6,9368176900,Male,600
+14,"Dr.Nitya Singh",ENT,Noida,4.6,9368176900,Female,650
+15,"Dr.Himanshu Gupta",Dentist,Lucknow,4.5,9368176900,Male,550
+16,"Dr.Ankit Bahal",Dentist,Mumbai,4.7,9368176900,Male,600
+17,"Dr.Ashish Mathur",Dentist,Banglore,4.3,9368176900,Male,500
+18,"Dr.Saurabh Agarwal",Diabetologist,Delhi,4.2,9368176900,Male,550
+19,"Dr.Atul Mehrotra",Diabetologist,Lucknow,4.2,9368176900,Male,500
+20,"Dr. Amit Mohan",Diabetologist,Mumbai,4.1,9368176900,Male,600
+21,"Dr.Amit Singh",Homeopath,Delhi,4.5,9368176900,Male,650

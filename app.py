@@ -12,7 +12,7 @@ import os
 api_key = API_Settings.API_KEY
 os.environ["API_KEY"]=api_key
 
-documents = SimpleDirectoryReader(input_files=["doctors.csv"])
+documents = SimpleDirectoryReader(input_files=["doctor.csv"])
 documents = documents.load_data()
 embed_model = GeminiEmbedding(model_name="models/embedding-001", api_key=api_key)
 Settings.embed_model = embed_model
