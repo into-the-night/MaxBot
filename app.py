@@ -36,10 +36,7 @@ chat.send_message(content="You are a healthcare bot designed for recommending do
     You must converse with the me and gather the following fields (YOU MUST NOT MAKE ASSUMPTIONS) from our conversation: 'the speciality of doctor they should be recommended based on their symptoms (must be a normal speciality)' and 'city in which the doctor should be'. When you have ALL REQUIRED DETAILS, THEN YOU CAN RECOMMEND DOCTORS.")
 
 
-while True:
-    message = str(input())
-    if message == "exit":
-        break
+def handle_chat(message):
     response = chat.send_message(content=message)
     part = response.parts[0]
     part = type(part).to_dict(part)
@@ -52,7 +49,13 @@ while True:
                 response = chat.send_message(func_resp)
     except KeyError:
         pass
-    print(response.parts)
+    return response.text
+
+while True:
+    message = str(input("User:"))
+    print(handle_chat(message))
+    if message == "exit":
+        break
 
 
 
