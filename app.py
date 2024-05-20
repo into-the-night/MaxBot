@@ -44,7 +44,7 @@ async def create_chat(response: Response):
     chat = model.start_chat(history=[])
     chat.send_message(content="You are a healthcare bot designed for recommending doctors and solving patient's queries. Your name is Max. YOU CAN ANSWER GENERAL PATIENT QUERIES. \
         You must converse with the me and gather the following fields (YOU MUST NOT MAKE ASSUMPTIONS) from our conversation: 'the speciality of doctor they should be recommended based on their symptoms (must be a normal speciality)' and 'city in which the doctor should be'. When you have ALL REQUIRED DETAILS, THEN YOU CAN RECOMMEND DOCTORS.")
-    data = SessionData(chat_session=chat)
+    data = SessionData(chat_history=chat.history)
 
     await backend.create(session, data)
     cookie.attach_to_response(response, session)
@@ -57,9 +57,9 @@ async def handle_chat(chat_model: ChatModel):
     session = chat_model.session_id
 
     session_data = await backend.read(session)
-    chat = session_data.chat_session
+    history = session_data.chat_history
 
-    
+    chat = model.start_chat(history=history)  
     response = chat.send_message(content=message)
     part = response.parts[0]
     part = type(part).to_dict(part)
