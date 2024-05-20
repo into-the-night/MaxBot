@@ -1,42 +1,65 @@
+from fastapi import FastAPI, responses, Header, HTTPException, Depends
+from fastapi.middleware.cors import CORSMiddleware
+from request_schemas.chat_schemas import ChatModel, SessionData
+
+app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 from settings import API_Settings
+from data.database import get_query_engine
 
 import google.generativeai as genai
 import google.ai.generativelanguage as glm
-from llama_index.core import Settings
-from llama_index.llms.gemini import Gemini
-from llama_index.core import SimpleDirectoryReader
-from llama_index.embeddings.gemini import GeminiEmbedding
-from llama_index.core import VectorStoreIndex
 
-import os
-api_key = API_Settings.API_KEY
-os.environ["API_KEY"]=api_key
-
-documents = SimpleDirectoryReader(input_files=["doctor.csv"])
-documents = documents.load_data()
-embed_model = GeminiEmbedding(model_name="models/embedding-001", api_key=api_key)
-Settings.embed_model = embed_model
-Settings.llm = Gemini(api_key=api_key, temperature=0.7, model='models/gemini-pro')
-index = VectorStoreIndex.from_documents(documents)
-query_engine = index.as_query_engine(similarity_top_k=3)
 
 def get_doc_recs(doctor_type: str, location: str) -> str:
     """ get doctor recommendations ONLY when given BOTH type (speciality) of doctor and location of the user"""
-
+    
+    query_engine = get_query_engine()
     query = f'Give me all information about a doctor of {doctor_type} in {location}'
     response = query_engine.query(query)
     
     return str(response)
 
-
+api_key = API_Settings.API_KEY
 genai.configure(api_key=API_Settings.API_KEY)
 model = genai.GenerativeModel('gemini-pro', tools=[get_doc_recs])
-chat = model.start_chat(history=[])
-chat.send_message(content="You are a healthcare bot designed for recommending doctors and solving patient's queries. Your name is Max. YOU CAN ANSWER GENERAL PATIENT QUERIES. \
-    You must converse with the me and gather the following fields (YOU MUST NOT MAKE ASSUMPTIONS) from our conversation: 'the speciality of doctor they should be recommended based on their symptoms (must be a normal speciality)' and 'city in which the doctor should be'. When you have ALL REQUIRED DETAILS, THEN YOU CAN RECOMMEND DOCTORS.")
+
+from uuid import uuid4
+from session import backend, cookie
+from fastapi import Response
+
+@app.post("/create_chat")
+async def create_chat(response: Response):
+    session = uuid4()
+    chat = model.start_chat(history=[])
+    chat.send_message(content="You are a healthcare bot designed for recommending doctors and solving patient's queries. Your name is Max. YOU CAN ANSWER GENERAL PATIENT QUERIES. \
+        You must converse with the me and gather the following fields (YOU MUST NOT MAKE ASSUMPTIONS) from our conversation: 'the speciality of doctor they should be recommended based on their symptoms (must be a normal speciality)' and 'city in which the doctor should be'. When you have ALL REQUIRED DETAILS, THEN YOU CAN RECOMMEND DOCTORS.")
+    data = SessionData(chat_session=chat)
+
+    await backend.create(session, data)
+    cookie.attach_to_response(response, session)
+    return { "session_id": session }, 200
 
 
-def handle_chat(message):
+@app.post("/chat")
+async def handle_chat(chat_model: ChatModel):
+    message = chat_model.message
+    session = chat_model.session_id
+
+    session_data = await backend.read(session)
+    chat = session_data.chat_session
+
+    
     response = chat.send_message(content=message)
     part = response.parts[0]
     part = type(part).to_dict(part)
@@ -49,13 +72,13 @@ def handle_chat(message):
                 response = chat.send_message(func_resp)
     except KeyError:
         pass
-    return response.text
+    return { response.text } , 200
 
-while True:
-    message = str(input("User:"))
-    print(handle_chat(message))
-    if message == "exit":
-        break
+
+@app.get("/")
+async def root():
+    return responses.RedirectResponse(url="/docs")
+
 
 
 
