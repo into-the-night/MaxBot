@@ -79,6 +79,10 @@ async def handle_chat(chat_model: ChatModel):
 async def root():
     return responses.RedirectResponse(url="/docs")
 
+if __name__ == '__main__':
+    import uvicorn
+    uvicorn.run(app)
+
 
 
 
