@@ -58,7 +58,7 @@ async def handle_chat(chat_model: ChatModel):
 
     session_data = await backend.read(session)
     history = session_data.chat_history
-
+    print(history)
     chat = model.start_chat(history=history)  
     response = chat.send_message(content=message)
     part = response.parts[0]
@@ -72,6 +72,9 @@ async def handle_chat(chat_model: ChatModel):
                 response = chat.send_message(func_resp)
     except KeyError:
         pass
+    
+    session_data = SessionData(chat_history=chat.history)
+    await backend.update(session, session_data)
     return { response.text } , 200
 
 
