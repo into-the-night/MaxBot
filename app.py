@@ -55,10 +55,12 @@ async def create_chat(response: Response):
 async def handle_chat(chat_model: ChatModel):
     message = chat_model.message
     session = chat_model.session_id
+    try:  
+        session_data = await backend.read(session)
+        history = session_data.chat_history
+    except:
+        return {"Session Not Found. Please create a session using /create_chat."}, 200
 
-    session_data = await backend.read(session)
-    history = session_data.chat_history
-    print(history)
     chat = model.start_chat(history=history)  
     response = chat.send_message(content=message)
     part = response.parts[0]
