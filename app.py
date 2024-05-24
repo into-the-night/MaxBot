@@ -2,7 +2,7 @@ from fastapi import FastAPI, responses, Header, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from request_schemas.chat_schemas import ChatModel, SessionData
 
-app = FastAPI()
+app = FastAPI(title="MaxBot API :)", version="ALPHA")
 
 origins = ["*"]
 
