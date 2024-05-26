@@ -3,7 +3,7 @@
 ## Features ✨
 
 - Chat with MaxBot regarding your health and symptoms.
-- Get curated doctor recommendations based on your symptoms and location (NOTE: The dataset for doctors in MaxBot is very limited and as this was made as a hackathon project, I don't necessarily plan on expanding it either)
+- Get curated doctor recommendations based on your symptoms and location (NOTE: The dataset for doctors in MaxBot is NOT REAL and very limited. As this was made for a hackathon, I don't necessarily plan on expanding it either)
 
 ## Built With 🛠
 
