@@ -23,6 +23,9 @@ or Deploy locally:
 - Create a virtual environment (Recommended)
 
   ```py -m venv .venv```
+- Activate the virtual environment
+
+  ```.venv/Scripts/activate```
 - Install requirements
   
   ```pip install -r requirements.txt```
