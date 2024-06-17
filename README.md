@@ -27,8 +27,11 @@ or Deploy locally:
 
   ```.venv/Scripts/activate```
 - Install requirements
-  
+
   ```pip install -r requirements.txt```
+- Important: Requires a Gemini API key (get yours at: https://aistudio.google.com/app/apikey) and make a ```.env``` file with the following inside:
+
+  ```GOOGLE_API_KEY = *Your API key here*```
 - Run using uvicorn
 
   ```uvicorn app:app --reload```
