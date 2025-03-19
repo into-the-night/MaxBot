@@ -15,6 +15,7 @@ Deprecated==1.2.18
 dirtyjson==1.0.8
 distro==1.9.0
 fastapi==0.115.11
+fastapi-sessions==0.3.2
 filetype==1.2.0
 frozenlist==1.5.0
 fsspec==2025.2.0
@@ -34,6 +35,7 @@ httpcore==1.0.7
 httplib2==0.22.0
 httpx==0.28.1
 idna==3.10
+itsdangerous==2.2.0
 jiter==0.8.2
 joblib==1.4.2
 llama-cloud==0.1.13
