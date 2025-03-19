@@ -32,7 +32,7 @@ def get_doc_recs(doctor_type: str, location: str) -> str:
 
 api_key = API_Settings.API_KEY
 genai.configure(api_key=API_Settings.API_KEY)
-model = genai.GenerativeModel('gemini-pro', tools=[get_doc_recs])
+model = genai.GenerativeModel('gemini-2.0-flash-lite', tools=[get_doc_recs])
 
 from uuid import uuid4
 from session import backend, cookie
