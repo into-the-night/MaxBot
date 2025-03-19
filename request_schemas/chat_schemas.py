@@ -1,6 +1,5 @@
 from pydantic import BaseModel, ConfigDict
 from uuid import UUID
-import google.generativeai as genai
 from google.ai.generativelanguage import Content
 
 class ChatModel(BaseModel):

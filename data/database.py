@@ -8,7 +8,7 @@ from llama_index.core import VectorStoreIndex
 api_key = API_Settings.API_KEY
 embed_model = GeminiEmbedding(model_name="models/embedding-001", api_key=api_key)
 Settings.embed_model = embed_model
-Settings.llm = Gemini(api_key=api_key, temperature=0.7, model='models/gemini-pro')
+Settings.llm = Gemini(api_key=api_key, temperature=0.7, model='models/gemini-2.0-flash-lite')
 
 def get_query_engine():
     
